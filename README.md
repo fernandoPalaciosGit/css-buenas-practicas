@@ -216,30 +216,3 @@ En un mobil (fisico) la resolucion de pantalla (la calidad visual de estilos) es
 
 	```
 	
--- indice de pagina : Clases en HTML
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- PRACTICAS CSS
-https://github.com/fernandoPalaciosGit/CSS-Guidelines
-
--- PRACTICAS CSS
-http://browserdiet.com/es/
-
--- modificar el css del proyecto de portfolio con css orientado a objetos
-
--- http://scottjehl.github.io/picturefill/
-carga dinamica de imagenes en funcion de la resoluciond e la pantalla y a traves del html
-lo bueno de esta opcion, es que cargamos la imagen en el html como contenido y no como un grafico secundario como puede ser background-image

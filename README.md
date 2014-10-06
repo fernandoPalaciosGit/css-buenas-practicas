@@ -150,6 +150,9 @@ En un mobil (fisico) la resolucion de pantalla (la calidad visual de estilos) es
 
 
 ### ESTRUCTURA DE ARCHIVOS
+		- app/css
+				main.css
+
 		- app/scss/styles
 				_main.scss	// tabla de contenidos + @includes
 
@@ -171,6 +174,7 @@ En un mobil (fisico) la resolucion de pantalla (la calidad visual de estilos) es
 		- app/scss/styles/vendors
 				_normalize.scss
 
+
 ### REGLAS DE SELECTORES
 - cada bloque de estilos identarlos con doble tab (parecido a la estructura del DOM)
 - UN guion simples para delimitar los nombres de clase
@@ -187,7 +191,8 @@ En un mobil (fisico) la resolucion de pantalla (la calidad visual de estilos) es
 	comment-widget{ } // nivel de abstraccion: ¿Que es el elemento para la web?
 	pokemon-widget{ }
 
-			pokemon-widget--header{ }	// estado del elemento: ¿Como se comporta el elemento en esta situacion?
+			pokemon-widget--slide{ }	// estado del elemento: ¿Como se comporta el elemento en esta situacion?
+			pokemon-widget--alert{ }
 
 			pokemon-widget__list-top10{}		// contenido del elemento 
 
@@ -202,17 +207,112 @@ En un mobil (fisico) la resolucion de pantalla (la calidad visual de estilos) es
 
 ###### cada componente se debe comportar como un widget, `el css de un widget debe ser generico`
 	```css
-		
-		<aside class="vendor-banner">
+		<section class="fbm-news">
+			<aside class="fbm-news--banner">
 
-			<!-- ESTO ES UN WIDGET, trocito de html que se puede reutilizar -->
-			<div class="banner--news"> 
-				<h4 class="banner--news__title"></h4>
-				<input class="banner--news__search" type="text">
-				<input class="banner--news__send" type="submit">
-			</div>
+				<!-- ESTO ES UN WIDGET, trocito de html que se puede reutilizar -->
+				<div class="banner--news"> 
+					<h4 class="banner--news__title"></h4>
+					<input class="banner--news__search" type="text">
+					<input class="banner--news__send" type="submit">
+				</div>
 
-		</aside>
-
+			</aside>
+		</section>
 	```
+
+###### JS HOOKS
+	```css
+		<table class="nba-masters">
+			<thead class="nba-master--header js-nba-master--header">
+				<th></th>
+			</thead>
+		</table>
+	```
+
+###### SELECORES CUASI CALIFICADOS
+Para comunicar a los desarrolladores donde queremos utilizar esa clase
+
+	```css
+		/*table*/.news-letter--header{ }
+		/*p*/.intro{ }
+		/*figure ul*/.img-thumbs{ }
+	```
+
+###### OOCSS -> orientacion a objetos en CSS
+Se trata de abstraer las clasess como elementos heredados, con una jerarquia logica del contexto de esa clse
 	
+	```css
+		.living-room
+				.living-room--table
+				.living-room--shelf
+				.living-room--
+	```
+
+Entonces tenemos dos reglas de seleccion de clases a traves del shorcut `--`
+
+`componentes` heredados de jerarquias (OOCSS) -> cuando los elementos son de caracter real
+
+		```css
+			.person-man
+					.person-man--skirt
+					.person--woman--skirt
+		```
+
+
+`comportamiento` del elemento de la clase -> cuando los elementos son de caracter intangibles
+
+	```css
+		/*inpu[type="button"]*/.user-action{ }
+				.user-action--alert
+				.user-action--trade
+				.user-action--alert
+	```
+
+###### SISTEMA DE GRILLAS o LAYOUT
+- nunca utilizar **anchos** ni **altos** en los elementos **contenedores** de nustro sistema de grillas.
+- nuestro **layout debe ser fluido**, nunca hay que aplicarles dimensiones explicitas (px, em, vm, rem). 
+- El sistema de grids debe, idealmente, estar dado en porcentajes.
+
+###### TAMAÑOS DE FUNTE
+Los tamaños de fuentes deben darse en rems con fallback en pixels. Así se aprovechan los beneficios de accesibilidad de los rems con la robustez de los pixels.
+
+	```css
+		$BASEFONT: 16;
+		@mixin font-size( $font-size: 16 ) {
+			font-size: ($font-size)*1px;
+			font-size: ($font-size/$BASEFONT)*1rem;
+		}
+		html{
+			@include font-size($BASEFONT);
+		}
+		body{
+			font-size: 100%;
+		}
+		.img-random--thumb{
+			@include font-size(10);
+		}
+	```
+
+###### ANIDACION EN PREPROCESADORES
+######### MAL
+	
+	```css
+		.header{
+			.site-nav{
+				li{
+					a{ }
+				}
+			}
+		}
+	```
+
+######### BIEN
+
+	```css
+		.header{}
+		.site-nav{
+			li{ }
+			a{ }
+		}
+	```
